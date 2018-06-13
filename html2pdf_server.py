@@ -38,7 +38,7 @@ class HTML2PDF(Resource):
 		if f:
 			t_input = tempfile.mktemp()+'.html'
 			print '++++++IN: '+t_input
-			t_output = 'uploads/out.pdf'
+			t_output = 'tmp/out.pdf'
 			os.remove(t_output)  ###### remove this line later
 			print '++++++OUT: '+t_output
 			
@@ -55,6 +55,8 @@ class HTML2PDF(Resource):
 				return jsonify (['Error occured'])
 			response = flask.make_response(of.read())
 			response.headers['content-type'] = 'application/octet-stream'
+			of.close()
+			os.remove(t_output)
 			return response
 		else:
 			return jsonify(['False'])
